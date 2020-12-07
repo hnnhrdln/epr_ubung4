@@ -1,1 +1,1 @@
-__author__ = "5641727, Redelin, $Matrikelnummer, $Nachname"
+__author__ = "5641727, Redelin, $matrikelnummer, $name"
