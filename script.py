@@ -31,7 +31,7 @@ while True:
     try:
         number_of_players = int(input("How many players do you want?"))
         break
-    except Error: 
+    except ValueError: 
         continue
 
 while isinstance(number_of_players, int) == False or number_of_players <= 0:
@@ -77,7 +77,7 @@ def amount_dice_faces():
         try:
             amount_dice = int(input("How many dice do you want?"))
             break
-        except Error: 
+        except ValueError: 
             continue
 
     while isinstance(amount_dice, int) == False or amount_dice <= 0:
@@ -87,7 +87,7 @@ def amount_dice_faces():
         try:
             amount_faces = int(input("How many faces do your dice have?"))
             break
-        except Error: 
+        except ValueError: 
             continue
 
     while isinstance(amount_faces, int) == False or amount_faces <= 0:
@@ -127,8 +127,8 @@ def sixteen_is_dead(players):
 
             while True:
 
-                input_human = input("Wollen Sie erneut Würfeln?(Ja/Nein)")
-                if input_human == 'Ja' :
+                input_human = input("Press ENTER to roll again") #turns out enter ist just empty string input
+                if input_human == '' :
                     score_list = roll_dice(amount_dice, amount_faces)
                     print(sum(score_list))
                     score[i][1] = score[i][1] + sum(score_list) 
@@ -151,7 +151,7 @@ def sixteen_is_dead(players):
             
             while True:
 
-                for _ in range(1, random.randint(1, 5)):
+                for _ in range(1, random.randint(1, 5)): #lass den pc jetzt erstmal zufällig oft würfeln
                     score_list = roll_dice(amount_dice, amount_faces)
                     print(sum(score_list))
                     score[i][1] = score[i][1] + sum(score_list) 
@@ -168,8 +168,8 @@ def sixteen_is_dead(players):
                     print("Sie haben verloren.")
                     break
 
-    #compare_results(score)
+    compare_results(score)
 
 
-#sixteen_is_dead(players)
+sixteen_is_dead(players)
 
