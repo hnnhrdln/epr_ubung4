@@ -78,7 +78,52 @@ def sixteen_is_dead(players):
     """
     implementiert ablauf. 
     players ist eine liste aus tupel
+  
     """
+    
+    while True:  
+    score = 0
+    amount_dice = 2
+    
+    for i in range(1,len(players):
+        if players[i[1]] == True:
+  
+            while True:
+
+                    InputHuman = input("Wollen Sie erneut Würfeln?(Ja/Nein)")
+                    if InputHuman == 'Ja' :
+                        for i in range(0,amount_dice):
+                            score += roll_dice(amount_dice,6)[i]
+                        print(score)
+                    if InputHuman == 'Nein':
+                        players.append(score)
+                        break # Züruck zum Anfang
+                    if score == 10:
+                        print("Sie müssen jetzt erneut würfeln.")
+                        score += roll_dice(amount_dice,6)[i]
+                    if score == 9:
+                        print("Sie dürfen nicht mehr würfeln.")
+                        players.append(score)
+                        break
+                    if score >= 16:
+                        print("Sie haben verloren.")
+                        break
+                    
+        else:
+            
+            while True:
+            
+                if score == 10:
+                    print("Sie müssen jetzt erneut würfeln.")
+                            
+                if score == 9:
+                    print("Sie dürfen nicht mehr würfeln.")
+                    break
+                        
+                if score >= 16:
+                    print("Sie haben verloren.")
+                    break
+
     print(roll_dice(6,6, None))
 
 
