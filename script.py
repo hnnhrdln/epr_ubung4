@@ -33,7 +33,7 @@ while True:
     try:
         number_of_players = int(input("How many players do you want?"))
         break
-    except: 
+    except Error: 
         continue
 
 while isinstance(number_of_players, int) == False or number_of_players <= 0:
