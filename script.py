@@ -1,4 +1,4 @@
-__author__ = "5641727, Redelin, $matrikelnummer, $name"
+__author__ = "5641727, Redelin, 6544078, Kervella"
 
 import random
 random.seed(1234)
@@ -6,9 +6,6 @@ random.seed(1234)
 """
 TODO
 Beginn:
--players definieren: ('name des spielers', boolean: über eingabe oder auto)
-->vllt in eigener funktion user prompts zur konfigurierung schalten
--user prompt über anzahl der würfel und augenzahl der würfel
 -nutzer zu beginn die spielregeln & eingaben erklären. [Return] soll roll_dice ausführen, [n] den "becher" weitergeben
 
 sixteen_is_dead:
@@ -22,6 +19,7 @@ allgemein:
 """
 #Game set-up
 
+"""
 print("Hi, lets play sixteen or dead.\nThe rules: Choose a number or dice and\
 throw them until you get as close to 16 as possible.\nBut beware! If you excede 16 you're out. Whoever is closest to 16 wins.\
 \nIf your throws add up to 9 you cannot throw again. If they\
@@ -55,8 +53,9 @@ for x in range(0, number_of_players):
     players.append(player_tuple)
 
 print(players)
+"""
 
-
+players = [("tick", False),("trick", True),("track", False)]
 
 #some loop to fill lst
 
@@ -73,58 +72,104 @@ def roll_dice(number, faces, seed=None):
         dice_throws.append(random.randrange(1,faces+1))
     return dice_throws
 
+def amount_dice_faces():
+    while True:
+        try:
+            amount_dice = int(input("How many dice do you want?"))
+            break
+        except Error: 
+            continue
+
+    while isinstance(amount_dice, int) == False or amount_dice <= 0:
+        amount_dice = int(input("How many dice do you want?"))
+
+    while True:
+        try:
+            amount_faces = int(input("How many faces do your dice have?"))
+            break
+        except Error: 
+            continue
+
+    while isinstance(amount_faces, int) == False or amount_faces <= 0:
+        amount_faces = int(input("How many faces do your dice have?"))
+
+    return [amount_dice, amount_faces]
+
+def compare_results(score):
+    bla = []
+    for element in score:
+        if element[1] > 16:
+            continue
+        else:
+            bla.append(element)
+
+    best_score = max([player[-1] for player in bla])
+    for subarray in bla:
+        if best_score in subarray:
+            print("The winner is " + subarray[0])
+
+
 
 def sixteen_is_dead(players):
     """
-    implementiert ablauf. 
-    players ist eine liste aus tupel
-  
+    Implementiert ablauf.   
     """
+    amount_dice_faces_liste = amount_dice_faces()
+    amount_dice = amount_dice_faces_liste[0]
+    amount_faces = amount_dice_faces_liste[1]
+
+    score = []
+    for element in players:
+        score.append([element[0], 0])
     
-    while True:  
-    score = 0
-    amount_dice = 2
-    
-    for i in range(1,len(players):
-        if players[i[1]] == True:
-  
+    for i in range(0,len(players)):
+        if players[i][1] == True:
+
             while True:
 
-                    InputHuman = input("Wollen Sie erneut Würfeln?(Ja/Nein)")
-                    if InputHuman == 'Ja' :
-                        for i in range(0,amount_dice):
-                            score += roll_dice(amount_dice,6)[i]
-                        print(score)
-                    if InputHuman == 'Nein':
-                        players.append(score)
-                        break # Züruck zum Anfang
-                    if score == 10:
-                        print("Sie müssen jetzt erneut würfeln.")
-                        score += roll_dice(amount_dice,6)[i]
-                    if score == 9:
-                        print("Sie dürfen nicht mehr würfeln.")
-                        players.append(score)
-                        break
-                    if score >= 16:
-                        print("Sie haben verloren.")
-                        break
+                input_human = input("Wollen Sie erneut Würfeln?(Ja/Nein)")
+                if input_human == 'Ja' :
+                    score_list = roll_dice(amount_dice, amount_faces)
+                    print(sum(score_list))
+                    score[i][1] = score[i][1] + sum(score_list) 
+                    print(score)
+                if input_human == 'Nein':
+                    players.append(score)
+                    break # Züruck zum Anfang
+                if score[i][1] == 10:
+                    print("Sie müssen jetzt erneut würfeln.")
+                    score += roll_dice(amount_dice,6)[i]
+                if score[i][1] == 9:
+                    print("Sie dürfen nicht mehr würfeln.")
+                    players.append(score)
+                    break
+                if score[i][1] >= 16:
+                    print("Sie haben verloren.")
+                    break
                     
         else:
             
             while True:
+
+                for _ in range(1, random.randint(1, 5)):
+                    score_list = roll_dice(amount_dice, amount_faces)
+                    print(sum(score_list))
+                    score[i][1] = score[i][1] + sum(score_list) 
+                    print(score)
             
-                if score == 10:
+                if score[i][1] == 10:
                     print("Sie müssen jetzt erneut würfeln.")
                             
-                if score == 9:
+                if score[i][1] == 9:
                     print("Sie dürfen nicht mehr würfeln.")
                     break
                         
-                if score >= 16:
+                if score[i][1] >= 16:
                     print("Sie haben verloren.")
                     break
 
-    print(roll_dice(6,6, None))
+    #compare_results(score)
 
 
-sixteen_is_dead(players)
+#sixteen_is_dead(players)
+
