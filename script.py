@@ -29,13 +29,13 @@ players = []
 
 while True:
     try:
-        number_of_players = int(input("How many players do you want?"))
+        number_of_players = int(input("How many players do you want to play with?"))
         break
     except ValueError: 
         continue
 
 while isinstance(number_of_players, int) == False or number_of_players <= 0:
-    number_of_players = int(input("How many players do you want?"))
+    number_of_players = int(input("How many players do you want to play with?"))
 
 for x in range(0, number_of_players):
     name = input("What is the name of player "+str(x+1)+"?\n")
@@ -75,23 +75,23 @@ def roll_dice(number, faces, seed=None):
 def amount_dice_faces():
     while True:
         try:
-            amount_dice = int(input("How many dice do you want?"))
+            amount_dice = int(input("How many dices do you want to use?"))
             break
         except ValueError: 
             continue
 
     while isinstance(amount_dice, int) == False or amount_dice <= 0:
-        amount_dice = int(input("How many dice do you want?"))
+        amount_dice = int(input("How many dices do you want to use?"))
 
     while True:
         try:
-            amount_faces = int(input("How many faces do your dice have?"))
+            amount_faces = int(input("How many faces does your dice have?"))
             break
         except ValueError: 
             continue
 
     while isinstance(amount_faces, int) == False or amount_faces <= 0:
-        amount_faces = int(input("How many faces do your dice have?"))
+        amount_faces = int(input("How many faces does your dice have?"))
 
     return [amount_dice, amount_faces]
 
@@ -133,18 +133,18 @@ def sixteen_is_dead(players):
                     print(sum(score_list))
                     score[i][1] = score[i][1] + sum(score_list) 
                     print(score)
-                if input_human == 'Nein':
+                if input_human == 'No':
                     players.append(score)
                     break # Züruck zum Anfang
                 if score[i][1] == 10:
-                    print("Sie müssen jetzt erneut würfeln.")
+                    print("You have to roll again.")
                     score += roll_dice(amount_dice,6)[i]
                 if score[i][1] == 9:
-                    print("Sie dürfen nicht mehr würfeln.")
+                    print("You can't roll again.")
                     players.append(score)
                     break
                 if score[i][1] >= 16:
-                    print("Sie haben verloren.")
+                    print("You have lost.")
                     break
                     
         else:
@@ -158,7 +158,7 @@ def sixteen_is_dead(players):
                     print(score)
             
                 if score[i][1] == 10:
-                    print("Sie müssen jetzt erneut würfeln.")
+                    print("Sie müssen jetzt erneut würfeln.") #Soll überhaupt ein Text kommen wenn der Computer spielt ?
                             
                 if score[i][1] == 9:
                     print("Sie dürfen nicht mehr würfeln.")
