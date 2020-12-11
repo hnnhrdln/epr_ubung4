@@ -1,6 +1,7 @@
 __author__ = "5641727, Redelin, 6544078, Kervella"
 
 import random
+import time
 random.seed(1234)
 
 """
@@ -59,6 +60,9 @@ players = [("tick", False),("trick", True),("track", False)]
 
 #some loop to fill lst
 
+"""
+Function used to define the results of the dice throws in form of a list
+"""
 
 def roll_dice(number, faces, seed=None):
     """
@@ -71,6 +75,10 @@ def roll_dice(number, faces, seed=None):
     for i in range (0,number):
         dice_throws.append(random.randrange(1,faces+1))
     return dice_throws
+
+"""
+Function used to define the amount of faces the dice, or dices, we use to play, have.
+"""
 
 def amount_dice_faces():
     while True:
@@ -95,6 +103,10 @@ def amount_dice_faces():
 
     return [amount_dice, amount_faces]
 
+"""
+Quick comparaison of multiple results from all the players to return a winner
+"""
+
 def compare_results(score):
     bla = []
     for element in score:
@@ -108,7 +120,9 @@ def compare_results(score):
         if best_score in subarray:
             print("The winner is " + subarray[0])
 
-
+"""
+Main function used to play the game with all the given variables and all the functions defined before
+"""
 
 def sixteen_is_dead(players):
     """
@@ -136,9 +150,10 @@ def sixteen_is_dead(players):
                 if input_human == 'No':
                     players.append(score)
                     break # Züruck zum Anfang
-                if score[i][1] == 10:
+                if score[i][1] == 10:    # 3 Sekunden automatisch warten sprich keine erneute Eingabe
                     print("You have to roll again.")
                     score += roll_dice(amount_dice,6)[i]
+                    time.sleep(3)
                 if score[i][1] == 9:
                     print("You can't roll again.")
                     players.append(score)
@@ -159,6 +174,7 @@ def sixteen_is_dead(players):
             
                 if score[i][1] == 10:
                     print("Sie müssen jetzt erneut würfeln.") #Soll überhaupt ein Text kommen wenn der Computer spielt ?
+                    time.sleep(3)
                             
                 if score[i][1] == 9:
                     print("Sie dürfen nicht mehr würfeln.")
