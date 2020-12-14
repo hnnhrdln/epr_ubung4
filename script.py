@@ -5,22 +5,11 @@ import time
 random.seed(1234)
 
 """
-TODO
-Beginn:
--nutzer zu beginn die spielregeln & eingaben erklären. [Return] soll roll_dice ausführen, [n] den "becher" weitergeben
-
-sixteen_is_dead:
--logic umsetzen, aka 10er, 9er, gewinn/verlust koordinieren, spieler anzeigen
-->(random risikobereitschaft im pc implementieren? aka pc kann "entscheiden" sein glück zu versuchen und wirft nochmal?)
-
-allgemein:
--error handling -> nicht abbruch bei falscheingabe
--spiel beenden 
+TODO:
 -spiel neu starten
 """
 #Game set-up
 
-"""
 print("Hi, lets play sixteen or dead.\nThe rules: Choose a number or dice and\
 throw them until you get as close to 16 as possible.\nBut beware! If you excede 16 you're out. Whoever is closest to 16 wins.\
 \nIf your throws add up to 9 you cannot throw again. If they\
@@ -53,20 +42,15 @@ for x in range(0, number_of_players):
 
     players.append(player_tuple)
 
-print(players)
-"""
 
-players = [("tick", False),("trick", True),("track", False)]
+players = [("tick", True),("trick", True),("track", False)]
 
 #some loop to fill lst
 
-"""
-Function used to define the results obtained from the dice throws in form of a list
-"""
 
 def roll_dice(number, faces, seed=None):
     """
-    Returns list of thrown dice values. Implements at least one dice.
+    Function used to define the results obtained from the dice throws in form of a list
     """
     if number < 1:
         number = 1
@@ -76,11 +60,11 @@ def roll_dice(number, faces, seed=None):
         dice_throws.append(random.randrange(1,faces+1))
     return dice_throws
 
-"""
-Function used to define the amount of faces the dice, or dices, we use to play, have.
-"""
 
 def amount_dice_faces():
+    """
+    Function used to define the amount of faces the dice, or dices, we use to play, have.
+    """
     while True:
         try:
             amount_dice = int(input("How many dices do you want to use?"))
@@ -103,30 +87,33 @@ def amount_dice_faces():
 
     return [amount_dice, amount_faces]
 
-"""
-Quick comparaison of multiple results from all the players to return a winner
-"""
 
 def compare_results(score):
-    bla = [] #wir benötigen einen besseren Namen
+    """
+    Quick comparaison of multiple results from all the players to return a winner
+    """
+    non_disqualified = [] #wir benötigen einen besseren Namen
     for element in score:
         if element[1] > 16:
             continue
         else:
-            bla.append(element)
+            non_disqualified.append(element)
 
-    best_score = max([player[-1] for player in bla])
-    for subarray in bla:
+    for player in score:
+        print(player[0] + " has " + str(player[1]) + " points")
+
+    best_score = max([player[-1] for player in non_disqualified])
+    for subarray in non_disqualified:
         if best_score in subarray:
-            print("The winner is " + subarray[0])
+            print("\nThe winner is " + subarray[0])
+            print("_____________________________________________")
 
-"""
-Main function used to play the game with all the given variables and all the functions defined before
-"""
+
+
 
 def sixteen_is_dead(players):
     """
-    Implementiert ablauf.   
+    Main function used to play the game with all the given variables and all the functions defined before
     """
     amount_dice_faces_liste = amount_dice_faces()
     amount_dice = amount_dice_faces_liste[0]
@@ -138,10 +125,11 @@ def sixteen_is_dead(players):
     
     for i in range(0,len(players)):
         if players[i][1] == True:
+            print("\nYour turn!")
 
             while True:
 
-                input_human = input("Press ENTER to roll again") #turns out enter ist just empty string input
+                input_human = input("Press ENTER to roll again or next[n]") #turns out enter ist just empty string input
                 if input_human == '' :
                     score_list = roll_dice(amount_dice, amount_faces)
                     print(sum(score_list))
@@ -161,21 +149,22 @@ def sixteen_is_dead(players):
                 if score[i][1] >= 16:
                     print("You have lost.")
                     break
+                if input_human == 'n':
+                    break
                     
         else:
+            print("\nNow its the computers turn. Woohoo")
             
-            while True:
-
-                for _ in range(1, random.randint(1, 5)): #lass den pc jetzt erstmal zufällig oft würfeln
-                    score_list = roll_dice(amount_dice, amount_faces)
-                    print(sum(score_list))
-                    score[i][1] = score[i][1] + sum(score_list) 
-                    print(score)
-            
+            for _ in range(1, random.randint(1, 5)): #lass den pc jetzt erstmal zufällig oft würfeln
+                score_list = roll_dice(amount_dice, amount_faces)
+                score[i][1] = score[i][1] + sum(score_list) 
+        
                 if score[i][1] == 10:
                     print("Sie müssen jetzt erneut würfeln.") #Soll überhaupt ein Text kommen wenn der Computer spielt ?
-                    time.sleep(3)
-                            
+                    #time.sleep(3)
+                    score_list = roll_dice(amount_dice, amount_faces)
+                    score[i][1] = score[i][1] + sum(score_list) 
+
                 if score[i][1] == 9:
                     print("Sie dürfen nicht mehr würfeln.")
                     break
@@ -183,9 +172,16 @@ def sixteen_is_dead(players):
                 if score[i][1] >= 16:
                     print("Sie haben verloren.")
                     break
+                
 
     compare_results(score)
 
-
-sixteen_is_dead(players)
+while True:
+    sixteen_is_dead(players)
+    prompt = input("Do you want to play another round?[y/n]")
+    if prompt == "y":
+        sixteen_is_dead(players)
+    if prompt == "n":
+        print("Cool, been real, bye")
+        break
 
