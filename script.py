@@ -1,13 +1,10 @@
+"""16 is dead."""
 __author__ = "5641727, Redelin, 6544078, Kervella"
 
 import random
 import time
 random.seed(1234)
 
-"""
-TODO:
--spiel neu starten
-"""
 #Game set-up
 
 print("Hi, lets play sixteen or dead.\nThe rules: Choose a number or dice and\
