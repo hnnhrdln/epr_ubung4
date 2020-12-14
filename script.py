@@ -10,7 +10,7 @@ random.seed(1234)
 print("Hi, lets play sixteen or dead.\nThe rules: Choose a number or dice and\
 throw them until you get as close to 16 as possible.\nBut beware! If you excede 16 you're out. Whoever is closest to 16 wins.\
 \nIf your throws add up to 9 you cannot throw again. If they\
-add up to 10, you have to throw again.\nEnjoy!")
+add up to 10, you have to throw again.\nEnjoy! Btw, the game exits when you press [Ctrl+C]")
 
 players = []
 
