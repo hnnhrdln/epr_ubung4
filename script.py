@@ -61,7 +61,7 @@ players = [("tick", False),("trick", True),("track", False)]
 #some loop to fill lst
 
 """
-Function used to define the results of the dice throws in form of a list
+Function used to define the results obtained from the dice throws in form of a list
 """
 
 def roll_dice(number, faces, seed=None):
@@ -108,7 +108,7 @@ Quick comparaison of multiple results from all the players to return a winner
 """
 
 def compare_results(score):
-    bla = []
+    bla = [] #wir benötigen einen besseren Namen
     for element in score:
         if element[1] > 16:
             continue
