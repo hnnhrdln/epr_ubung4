@@ -5,34 +5,35 @@ import random
 import time
 random.seed(1234)
 
-# Game set-up
-while True:
+# Rules of the game + how to use
 
-    print("Hi, lets play sixteen or dead.\nThe rules: Choose a number or dice and\
+print("Hi, lets play sixteen or dead.\nThe rules: Choose a number or dice and\
     throw them until you get as close to 16 as possible.\nBut beware! If you excede 16 you're out. Whoever is closest to 16 wins.\
     \nIf your throws add up to 9 you cannot throw again. If they\
     add up to 10, you have to throw again.\nEnjoy! Btw, the game exits when you press [Ctrl+C]")
+print("_____________________________________________")
+time.sleep(1)
+
+# Game set-up
+while True:
 
     players = []
 
     while True:
         try:
-            number_of_players = int(
-                input("How many players do you want to play with?"))
+            number_of_players = int(input("How many players do you want to play with?"))
             break
         except ValueError:
             continue
 
     while isinstance(number_of_players, int) == False or number_of_players <= 0:
-        number_of_players = int(
-            input("How many players do you want to play with?"))
+        number_of_players = int(input("How many players do you want to play with?"))
 
     for x in range(0, number_of_players):
         name = input("What is the name of player "+str(x+1)+"?\n")
         player_or_pc = input("Who is the player played by? [me/pc]\n")
         while player_or_pc != "me" and player_or_pc != "pc":
-            player_or_pc = input(
-                "Try again! Who is the player played by? [me/pc]\n")
+            player_or_pc = input("Try again! Who is the player played by? [me/pc]\n")
 
         if player_or_pc == "me":
             player_or_pc = True
@@ -51,7 +52,7 @@ while True:
         if number < 1:
             number = 1
 
-        dice_throws = []  # keine Ahnung ob das eine gute Idee ist die Liste so zu definieren
+        dice_throws = []  
         for _ in range(1, number+1):
             dice_throws.append(random.randrange(1, faces+1))
         return dice_throws
@@ -88,7 +89,7 @@ while True:
         """
         Quick comparaison of multiple results from all the players to return a winner
         """
-        non_disqualified = []  # wir benötigen einen besseren Namen
+        non_disqualified = [] 
         for element in score:
             if element[1] > 16:
                 continue
@@ -123,15 +124,16 @@ while True:
         for i in range(0, len(players)):
             if players[i][1] == True:
                 print("\nYour turn, "+players[i][0]+"!")
+                time.sleep(1)
 
                 while True:
-
-                    # turns out enter ist just empty string input
-                    input_human = input("Press ENTER to roll again or next[n]")
+                    
+                    input_human = input("Press ENTER to roll again or next[n]") # turns out enter ist just empty string input
                     if input_human == '':
                         score_list = roll_dice(amount_dice, amount_faces)
                         score[i][1] = score[i][1] + sum(score_list)
-                    if score[i][1] == 10:    # 3 Sekunden automatisch warten sprich keine erneute Eingabe
+                        print("You are at",score[i][1])
+                    if score[i][1] == 10:    
                         print("You have to roll again.")
                         score[i][1] += roll_dice(amount_dice, amount_faces)[i]
                         #time.sleep(3)
@@ -139,32 +141,35 @@ while True:
                         print("You can't roll again.")
                         break
                     if score[i][1] >= 16:
-                        print("You have lost.")
+                        print("You got too risky.")
                         break
                     if input_human == 'n':
                         break
 
             else:
                 print("\nNow its " +players[i][0]+"s turn. Woohoo")
+                time.sleep(1)
 
-                # lass den pc jetzt erstmal zufällig oft würfeln
-                for _ in range(1, random.randint(2, 5)):
+               
+                for _ in range(0, random.randint(1, 5)): # lass den pc jetzt erstmal zufällig oft würfeln
                     score_list = roll_dice(amount_dice, amount_faces)
                     score[i][1] = score[i][1] + sum(score_list)
+                    print("The Computer is at",score[i][1])
 
                     if score[i][1] == 10:
-                        # Soll überhaupt ein Text kommen wenn der Computer spielt ?
-                        print("Sie müssen jetzt erneut würfeln.")
-                        # time.sleep(3)
+                        print("The Computer has to roll the dices again!")
+                        time.sleep(3)
                         score_list = roll_dice(amount_dice, amount_faces)
                         score[i][1] = score[i][1] + sum(score_list)
 
                     if score[i][1] == 9:
-                        print("Sie dürfen nicht mehr würfeln.")
+                        print("The computer has to stop now.")
+                        time.sleep(1)
                         break
 
                     if score[i][1] >= 16:
-                        print("Sie haben verloren.")
+                        print("He went overboard !")
+                        time.sleep(1)
                         break
 
         compare_results(score)
@@ -172,6 +177,7 @@ while True:
 
 
     sixteen_is_dead(players)
+    print("_____________________________________________")
     prompt = input("Do you want to play another round?[y/n]")
     if prompt == "y":
         continue
