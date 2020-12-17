@@ -5,13 +5,14 @@ import random
 import time
 random.seed(1234)
 
-# Rules of the game + how to use
+# Rules of the game & how to use
 
-print("Hi, lets play sixteen or dead.\nThe rules: Choose a number or dice and\
-    throw them until you get as close to 16 as possible.\nBut beware! If you excede 16 you're out. Whoever is closest to 16 wins.\
-    \nIf your throws add up to 9 you cannot throw again. If they\
-    add up to 10, you have to throw again.\nEnjoy! Btw, the game exits when you press [Ctrl+C]")
-print("_____________________________________________")
+print("Hi, lets play sixteen or dead.")
+time.sleep(1)
+print("The rules: Choose a number of dices you want to play with and throw them until you get as close to 16 as possible.\
+    \nBut beware! If you excede 16 you're out. Whoever is closest to 16 wins.\
+    \nIf your throws add up to 9 you cannot throw again. If they add up to 10 you have to throw again.\nEnjoy! Btw, the game exits when you press [Ctrl+C]")
+print("_____________________________________________ \n")
 time.sleep(1)
 
 # Game set-up
@@ -91,13 +92,13 @@ while True:
         """
         non_disqualified = [] 
         for element in score:
-            if element[1] > 16:
+            if element[1] >= 16:
                 continue
             else:
                 non_disqualified.append(element)
 
         for player in score:
-            print(player[0] + " has " + str(player[1]) + " points")
+            print("\n" + player[0] + " has " + str(player[1]) + " points")
 
         if len(non_disqualified) > 0:    
             best_score = max([player[-1] for player in non_disqualified])
@@ -144,20 +145,25 @@ while True:
                         print("You got too risky.")
                         break
                     if input_human == 'n':
+                        print("\nYou passed your turn. The next player will play!")
                         break
 
             else:
-                print("\nNow its " +players[i][0]+"s turn. Woohoo")
+                print("\nNow its " + players[i][0]+"s turn. Woohoo for the AI")
                 time.sleep(1)
 
-               
-                for _ in range(0, random.randint(1, 5)): # lass den pc jetzt erstmal zufällig oft würfeln
+                range_AI = random.randint(3,5)
+                for _ in range(1, range_AI): # the AI chooses a random amount of throws in order to mimic free-will
+                    print("Rolling....")
+                    time.sleep(1)
                     score_list = roll_dice(amount_dice, amount_faces)
                     score[i][1] = score[i][1] + sum(score_list)
-                    print("The Computer is at",score[i][1])
+                    print("The AI is at",score[i][1])
+                    time.sleep(1)
+                    
 
                     if score[i][1] == 10:
-                        print("The Computer has to roll the dices again!")
+                        print("The AI has to roll the dices again!")
                         time.sleep(3)
                         score_list = roll_dice(amount_dice, amount_faces)
                         score[i][1] = score[i][1] + sum(score_list)
@@ -171,7 +177,9 @@ while True:
                         print("He went overboard !")
                         time.sleep(1)
                         break
-
+                    elif _ == range_AI - 1:      #displays to choice the AI made
+                        print("The AI is not rolling again!")
+                        time.sleep(1)
         compare_results(score)
 
 
@@ -183,5 +191,8 @@ while True:
         continue
     if prompt == "n":
         print("Cool, been real, bye")
+        time.sleep(1)
+        print("The game will end now")
+        print("_____________________________________________")
         break
 
