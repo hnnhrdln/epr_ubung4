@@ -7,7 +7,8 @@ Testcases:
 
 4. Spiel neustarten/abbrechen
 
-5.
+Lukas meinte wir soll Testfälle mit den jeweiligen Funktionen machen und nicht nur das große Programm.
+
 []
 spiellogic 9,10,16
 9- #dice 2, # augen 3
