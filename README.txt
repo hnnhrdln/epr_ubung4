@@ -1,3 +1,10 @@
+Annahmen:
+- Wenn ein Spieler zum score 10 kommt, wird er gezwungen erneut zu würfeln und dann ist seine Runde fertig.
+- Es wird mindestens ein Würfel benutzt
+- Man hat die Möglichkeit nach jeder Runde das Spiel fortzuführen oder zu schließen, danach müsste das Programm neu gestartet werden um erneut spielen zu können.
+
+
+
 Testcases mit random.seed(1234):
 
 1. Alle Eingaben falsch tätigen und verifizieren dass das Programm und die Funktionnen damit umgehen können.
