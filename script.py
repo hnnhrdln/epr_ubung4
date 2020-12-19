@@ -136,8 +136,11 @@ while True:
                         print("You are at",score[i][1])
                     if score[i][1] == 10:    
                         print("You have to roll again.")
-                        score[i][1] += roll_dice(amount_dice, amount_faces)[i]
                         #time.sleep(3)
+                        score_list = roll_dice(amount_dice, amount_faces)
+                        score[i][1] = score[i][1] + sum(score_list)
+                        print("You are at",score[i][1])
+                        break
                     if score[i][1] == 9:
                         print("You can't roll again.")
                         break
@@ -164,9 +167,11 @@ while True:
 
                     if score[i][1] == 10:
                         print("The AI has to roll the dices again!")
-                        time.sleep(3)
+                        #time.sleep(3)
                         score_list = roll_dice(amount_dice, amount_faces)
                         score[i][1] = score[i][1] + sum(score_list)
+                        print("You are at",score[i][1])
+                        break
 
                     if score[i][1] == 9:
                         print("The computer has to stop now.")
